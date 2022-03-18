@@ -5,7 +5,7 @@ public abstract class LambdaExecutor {
 
     @SuppressWarnings("unused")
     public static String getVersion() {
-        return "LambdaExecutor 1.0.3";
+        return "LambdaExecutor 1.0.4\n";
     }
 
     public interface ReturnLambdaExecutor<R, A> {
