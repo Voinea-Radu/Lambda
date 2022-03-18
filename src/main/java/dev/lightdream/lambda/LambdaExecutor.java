@@ -3,6 +3,11 @@ package dev.lightdream.lambda;
 @SuppressWarnings("unused")
 public abstract class LambdaExecutor {
 
+    @SuppressWarnings("unused")
+    static String getVersion() {
+        return "LambdaExecutor " + LambdaExecutor.class.getPackage().getImplementationVersion();
+    }
+
     public interface ReturnLambdaExecutor<R, A> {
         R execute(A o);
     }
