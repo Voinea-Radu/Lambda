@@ -4,7 +4,7 @@ package dev.lightdream.lambda;
 public abstract class LambdaExecutor {
 
     @SuppressWarnings("unused")
-    static String getVersion() {
+    public static String getVersion() {
         return "LambdaExecutor " + LambdaExecutor.class.getPackage().getImplementationVersion();
     }
 
