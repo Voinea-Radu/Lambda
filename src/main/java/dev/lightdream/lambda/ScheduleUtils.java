@@ -23,4 +23,8 @@ public class ScheduleUtils {
         }, delay, timer);
     }
 
+    public static void runTaskAsync(LambdaExecutor.NoReturnNoArgLambdaExecutor task) {
+        new Thread(task::execute).start();
+    }
+
 }
