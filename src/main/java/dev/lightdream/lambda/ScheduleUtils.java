@@ -2,10 +2,12 @@ package dev.lightdream.lambda;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import dev.lightdream.lambda.lambda.LambdaExecutor;
 
+@SuppressWarnings("unused")
 public class ScheduleUtils {
 
-    public static void runTaskLater(LambdaExecutor.NoReturnNoArgLambdaExecutor task, long delay) {
+    public static void runTaskLater(LambdaExecutor task, long delay) {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -14,7 +16,7 @@ public class ScheduleUtils {
         }, delay);
     }
 
-    public static void runTaskTimer(LambdaExecutor.NoReturnNoArgLambdaExecutor task, long delay, long timer) {
+    public static void runTaskTimer(LambdaExecutor task, long delay, long timer) {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -23,7 +25,7 @@ public class ScheduleUtils {
         }, delay, timer);
     }
 
-    public static void runTaskAsync(LambdaExecutor.NoReturnNoArgLambdaExecutor task) {
+    public static void runTaskAsync(LambdaExecutor task) {
         new Thread(task::execute).start();
     }
 

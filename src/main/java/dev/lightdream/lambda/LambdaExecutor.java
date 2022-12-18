@@ -1,6 +1,7 @@
 package dev.lightdream.lambda;
 
 @SuppressWarnings("unused")
+@Deprecated
 public abstract class LambdaExecutor {
 
     @Deprecated
