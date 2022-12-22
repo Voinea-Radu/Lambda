@@ -6,7 +6,7 @@
 
     <groupId>dev.lightdream</groupId>
     <artifactId>Lambda</artifactId>
-    <version>3.0.1</version>
+    <version>3.1.0</version>
 
     <distributionManagement>
         <repository>
@@ -19,5 +19,20 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>lightdream</id>
+            <url>https://repo.lightdream.dev</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>dev.lightdream</groupId>
+            <artifactId>Logger</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+    </dependencies>
 
 </project>

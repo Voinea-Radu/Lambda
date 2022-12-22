@@ -1,9 +1,8 @@
 package dev.lightdream.lambda.reflection;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.lang.annotation.Annotation;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,16 +10,18 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 public class Reflector {
 
+    private final ReflectionMain main;
     private final List<Class<?>> classes;
 
-    public Reflector(String packageName) {
+    public Reflector(ReflectionMain main, String packageName) {
+        this.main = main;
         this.classes = getClasses(packageName);
     }
 
     public List<Class<?>> getClassesAnnotatedWith(Class<? extends Annotation> annotation) {
         return classes
                 .stream()
-                .filter(clazz -> clazz.isAnnotationPresent(annotation))
+                .filter(aClass -> aClass.isAnnotationPresent(annotation))
                 .collect(Collectors.toList());
     }
 
@@ -34,29 +35,36 @@ public class Reflector {
     }
 
     private List<Class<?>> getClasses(String packageName) {
-        InputStream stream = ClassLoader.getSystemClassLoader()
-                .getResourceAsStream(packageName.replaceAll("[.]", "/"));
+        List<Class<?>> classes = new ArrayList<>();
 
-        if (stream == null) {
-            return new ArrayList<>();
+        URL resource = ClassLoader.getSystemClassLoader().getResource(packageName.replaceAll("[.]", "/"));
+        if (resource == null) {
+            return classes;
         }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        File directory = new File(resource.getFile());
+        if (directory.exists()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        // Recursively search for classes in subpackages
+                        classes.addAll(getClasses(packageName + "." + file.getName()));
+                    } else if (file.getName().endsWith(".class")) {
+                        // Add the class to the list
+                        classes.add(getClass(file.getName(), packageName));
+                    }
+                }
+            }
+        }
 
-        return reader.lines()
-                .filter(line -> line.endsWith(".class"))
-                .map(line -> getClass(line, packageName))
-                .collect(Collectors.toList());
+        return classes;
     }
 
+
     private Class<?> getClass(String className, String packageName) {
-        try {
-            return Class.forName(packageName + "."
-                    + className.substring(0, className.lastIndexOf('.')));
-        } catch (ClassNotFoundException e) {
-            // handle the exception
-        }
-        return null;
+        String fullClassName = packageName + "." + className.substring(0, className.lastIndexOf('.'));
+        return main.getClass(fullClassName);
     }
 
 
