@@ -29,4 +29,30 @@ public class ScheduleUtils {
         new Thread(task::execute).start();
     }
 
+    @Deprecated
+    public static void runTaskLater(dev.lightdream.lambda.LambdaExecutor.NoReturnNoArgLambdaExecutor task, long delay) {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                task.execute();
+            }
+        }, delay);
+    }
+
+    @Deprecated
+    public static void runTaskTimer(dev.lightdream.lambda.LambdaExecutor.NoReturnNoArgLambdaExecutor task, long delay, long timer) {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                task.execute();
+            }
+        }, delay, timer);
+    }
+
+    @Deprecated
+
+    public static void runTaskAsync(dev.lightdream.lambda.LambdaExecutor.NoReturnNoArgLambdaExecutor task) {
+        new Thread(task::execute).start();
+    }
+
 }
