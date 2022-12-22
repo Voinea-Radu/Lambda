@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 public class Reflector {
 
     private final List<Class<?>> classes;
@@ -17,7 +18,19 @@ public class Reflector {
     }
 
     public List<Class<?>> getClassesAnnotatedWith(Class<? extends Annotation> annotation) {
-        return classes.stream().filter(clazz -> clazz.isAnnotationPresent(annotation)).collect(Collectors.toList());
+        return classes
+                .stream()
+                .filter(clazz -> clazz.isAnnotationPresent(annotation))
+                .collect(Collectors.toList());
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> List<Class<? extends T>> getClassesThatExtend(Class<T> clazz) {
+        return classes
+                .stream()
+                .filter(clazz::isAssignableFrom)
+                .map(aClass -> (Class<? extends T>) aClass)
+                .collect(Collectors.toList());
     }
 
     private List<Class<?>> getClasses(String packageName) {
