@@ -1,7 +1,7 @@
 # Lambda
 
 ![Build](../../actions/workflows/build.yml/badge.svg)
-![Version](https://img.shields.io/badge/Version-3.1.1-red.svg)
+![Version](https://img.shields.io/badge/Version-3.1.2-red.svg)
 
 A library that allows the execution of delayed tasks as well as repeated tasks. It provides an API to create lambda
 functions.
@@ -27,7 +27,7 @@ functions.
     <dependency>
         <groupId>dev.lightdream</groupId>
         <artifactId>Lambda</artifactId>
-        <version>3.1.1</version>
+        <version>3.1.2</version>
     </dependency>
     <!-- Other dependencies -->
 </dependencies>
@@ -43,7 +43,7 @@ repositories {
 }
 
 dependencies {
-    implementation "dev.lightdream:Lambda:3.1.1"
+    implementation "dev.lightdream:Lambda:3.1.2"
 
     // Other dependencies
 }
