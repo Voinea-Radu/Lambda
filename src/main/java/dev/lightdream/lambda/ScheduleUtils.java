@@ -16,11 +16,29 @@ public class ScheduleUtils {
         }, delay);
     }
 
+    public static void runTaskLaterAsync(LambdaExecutor task, long delay) {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runTaskAsync(task);
+            }
+        }, delay);
+    }
+
     public static void runTaskTimer(LambdaExecutor task, long delay, long timer) {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 task.execute();
+            }
+        }, delay, timer);
+    }
+
+    public static void runTaskTimerAsync(LambdaExecutor task, long delay, long timer) {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runTaskAsync(task);
             }
         }, delay, timer);
     }
