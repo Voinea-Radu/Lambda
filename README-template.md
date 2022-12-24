@@ -1,27 +1,21 @@
-# Lambda
+# Logger
 
-![Build](../../actions/workflows/build.yml/badge.svg)
-![Version](https://img.shields.io/badge/Version-${{ env.VERSION }}-red.svg)
-
-A library that allows the execution of delayed tasks as well as repeated tasks. It provides an API to create lambda
-functions.
+[![Build](../../actions/workflows/build.yml/badge.svg)](../../actions)
+[![Version](https://img.shields.io/badge/Version-${{ env.VERSION }}-red.svg)](https://gitlab.com/lightdream-dev/api/-/packages)
 
 ## Use
 
-### Maven
+<details>
+  <summary>Maven</summary>
 
 ```xml
-
 <repositories>
     <repository>
-        <id>lightdream-repo</id>
+        <id>lightdream</id>
         <url>https://repo.lightdream.dev/</url>
     </repository>
     <!-- Other repositories -->
 </repositories>
-```
-
-```xml
 
 <dependencies>
     <dependency>
@@ -32,8 +26,10 @@ functions.
     <!-- Other dependencies -->
 </dependencies>
 ```
+</details>
 
-### Gradle
+<details>
+  <summary>Gradle</summary>
 
 ```groovy
 repositories {
@@ -48,7 +44,4 @@ dependencies {
     // Other dependencies
 }
 ```
-
-## Example
-
-Can be found in the [source code](/src/main/java/dev/lightdream/${{ env.PACKAGE }}/example)
+</details>

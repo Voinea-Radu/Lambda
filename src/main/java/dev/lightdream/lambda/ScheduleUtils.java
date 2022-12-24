@@ -1,12 +1,19 @@
 package dev.lightdream.lambda;
 
+import dev.lightdream.lambda.lambda.LambdaExecutor;
+
 import java.util.Timer;
 import java.util.TimerTask;
-import dev.lightdream.lambda.lambda.LambdaExecutor;
 
 @SuppressWarnings("unused")
 public class ScheduleUtils {
 
+    /**
+     * Schedules a task to be executed after a delay
+     *
+     * @param task  The task to be executed
+     * @param delay The delay in milliseconds
+     */
     public static void runTaskLater(LambdaExecutor task, long delay) {
         new Timer().schedule(new TimerTask() {
             @Override
@@ -16,6 +23,12 @@ public class ScheduleUtils {
         }, delay);
     }
 
+    /**
+     * Schedules a task to be executed after a delay asynchronously
+     *
+     * @param task  The task to be executed
+     * @param delay The delay in milliseconds
+     */
     public static void runTaskLaterAsync(LambdaExecutor task, long delay) {
         new Timer().schedule(new TimerTask() {
             @Override
@@ -25,6 +38,13 @@ public class ScheduleUtils {
         }, delay);
     }
 
+    /**
+     * Schedules a task to be executed after a delay repeatedly on a timer
+     *
+     * @param task  The task to be executed
+     * @param delay The delay in milliseconds
+     * @param timer The timer in milliseconds
+     */
     public static void runTaskTimer(LambdaExecutor task, long delay, long timer) {
         new Timer().schedule(new TimerTask() {
             @Override
@@ -34,6 +54,13 @@ public class ScheduleUtils {
         }, delay, timer);
     }
 
+    /**
+     * Schedules a task to be executed after a delay repeatedly on a timer asynchronously
+     *
+     * @param task  The task to be executed
+     * @param delay The delay in milliseconds
+     * @param timer The timer in milliseconds
+     */
     public static void runTaskTimerAsync(LambdaExecutor task, long delay, long timer) {
         new Timer().schedule(new TimerTask() {
             @Override
@@ -43,6 +70,11 @@ public class ScheduleUtils {
         }, delay, timer);
     }
 
+    /**
+     * Runs a task asynchronously
+     *
+     * @param task The task to be executed
+     */
     public static void runTaskAsync(LambdaExecutor task) {
         new Thread(task::execute).start();
     }
@@ -68,7 +100,6 @@ public class ScheduleUtils {
     }
 
     @Deprecated
-
     public static void runTaskAsync(dev.lightdream.lambda.LambdaExecutor.NoReturnNoArgLambdaExecutor task) {
         new Thread(task::execute).start();
     }
