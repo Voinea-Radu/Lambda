@@ -1,7 +1,9 @@
 package dev.lightdream.lambda.reflection;
 
+import org.reflections.Reflections;
+
 public interface ReflectionMain {
 
-    Class<?> getClass(String name);
+    Reflections getReflection();
 
 }
