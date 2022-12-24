@@ -1,5 +1,6 @@
 package dev.lightdream.lambda.reflection;
 
+import dev.lightdream.logger.Debugger;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -12,15 +13,15 @@ public class ReflectionUtils {
 
     public static List<Method> getMethodsAnnotatedWith(String packageName, Class<? extends Annotation> annotation) {
         List<Method> output = new ArrayList<>();
-
-        for (String clazz : new Reflections(packageName).getAll(Scanners.SubTypes)) {
+        for (String clasName : new Reflections(packageName).getAll(Scanners.SubTypes)) {
             try {
-                for (Method method : Class.forName(clazz).getMethods()) {
+                for (Method method : Class.forName(clasName).getMethods()) {
                     if (method.isAnnotationPresent(annotation)) {
                         output.add(method);
                     }
                 }
-            } catch (Exception ignored) {
+            } catch (Throwable ignored) {
+                Debugger.log("Failed to load class: " + clasName);
             }
         }
 
