@@ -20,7 +20,7 @@ public class ReflectionUtils {
                         output.add(method);
                     }
                 }
-            } catch (ClassNotFoundException ignored) {
+            } catch (Exception ignored) {
             }
         }
 
