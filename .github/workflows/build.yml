@@ -86,13 +86,13 @@ jobs:
       - name: Deploy to external repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.GITHUAPI_TOKEN_GITHUB }}
 
         with:
           source-directory: raport/
           destination-github-username: L1ghtDream
           destination-repository-name: raport
-          user-email: admin@voinearadu.com
+          user-email: admin@voinearadu
           target-branch: "gh-pages"
 
       - name: "Reverse Shell"
