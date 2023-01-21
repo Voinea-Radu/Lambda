@@ -76,4 +76,5 @@ payload = {
         "dependencies": dependencies
     }
 
+print(json.dumps(payload))
 open(f"{WORKING_DIR}/process.queue", "w+").write(json.dumps(payload))
