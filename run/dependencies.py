@@ -29,6 +29,10 @@ project_artifact = open(f"{WORKING_DIR}/{TMP_FOLDER}/{ARTIFACT_OUTPUT}", "r").re
 project_version = open(f"{WORKING_DIR}/{TMP_FOLDER}/{VERSION_OUTPUT}", "r").read().replace("\n", "")
 project_group = open(f"{WORKING_DIR}/{TMP_FOLDER}/{VERSION_OUTPUT}", "r").read().replace("\n", "")
 
+print("Artifact: " + project_artifact)
+print("Version: " + project_version)
+print("Group: " + project_group)
+
 project = {
     "group": project_group,
     "artifact": project_artifact,
