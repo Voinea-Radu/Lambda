@@ -76,5 +76,4 @@ payload = {
         "dependencies": dependencies
     }
 
-# Temporary Code
 open(f"{WORKING_DIR}/process.queue", "w+").write(json.dumps(payload))
