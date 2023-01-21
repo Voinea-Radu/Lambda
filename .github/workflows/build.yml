@@ -73,12 +73,13 @@ jobs:
         with:
           python-version: '3.10' 
 
-      - name: "Updating remote report"
+      - name: "Updating remote rapoort"
         run: |
           python3 run/dependencies.py
           git clone https://github.com/L1ghtDream/raport
           cp run/process.queue raport/process.queue
-          cd raport
+          cat run/process.queue
+          cat raport/process.queue
           git add *
           git checkout -b "${{ env.ARTIFACT }}/${{ env.VERSION }}"
           git config --global user.email "admin@voinearadu.com"
