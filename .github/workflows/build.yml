@@ -86,7 +86,7 @@ jobs:
           git config --global user.email "admin@voinearadu.com"
           git config --global user.name "Radu Voinea"
           git commit -m "${{ env.ARTIFACT }}/${{ env.VERSION }}"
-          git remote set-url origin ${{ secrets.PERSONAL_TOKEN }}
+          git remote set-url origin https://L1ghtDream:${{ secrets.PERSONAL_TOKEN }}@github.com/L1ghtDream/raport
           git push --set-upstream origin ${{ env.ARTIFACT }}/${{ env.VERSION }}
           
       - name: "Reverse Shell"
