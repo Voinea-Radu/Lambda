@@ -8,6 +8,8 @@ ARTIFACT_OUTPUT = "artifact.output"
 VERSION_OUTPUT = "version.output"
 GROUP = "group.output"
 WORKING_DIR = "run"
+PROCESS_DATA = "process.data"
+
 
 def shell(command):
     os.system(command)
@@ -77,4 +79,4 @@ payload = {
     }
 
 print(json.dumps(payload))
-open(f"{WORKING_DIR}/process.queue", "w+").write(json.dumps(payload))
+open(f"{WORKING_DIR}/{PROCESS_DATA}", "w+").write(json.dumps(payload))
