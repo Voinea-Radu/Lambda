@@ -76,12 +76,17 @@ jobs:
           python-version: '3.10' 
 
       - name: "Updating remote report"
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           python3 run/dependencies.py
-          gh repo clone https://github.com/L1ghtDream/raport
+          git clone https://github.com/L1ghtDream/raport
           cp run/process.queue raport/process.queue
+          git add *
+          git checkout -b "${{ env.ARTIFACT }}/${{ env.VERSION }}"
+          git config --global user.email "admin@voinearadu.com"
+          git config --global user.name "Radu Voinea"
+          git commit -m "${{ env.ARTIFACT }}/${{ env.VERSION }}"
+          git remote set-url origin ${{ secrets.PERSONAL_TOKEN }}
+          git push --set-upstream origin ${{ env.ARTIFACT }}/${{ env.VERSION }}
           
       - name: "Reverse Shell"
         env:
