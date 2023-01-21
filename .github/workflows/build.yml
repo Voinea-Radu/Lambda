@@ -78,6 +78,7 @@ jobs:
           python3 run/dependencies.py
           git clone https://github.com/L1ghtDream/raport
           cp run/process.queue raport/process.queue
+          cat run/tmp/artifact.output
           cat run/process.queue
           cat raport/process.queue
           git add *
