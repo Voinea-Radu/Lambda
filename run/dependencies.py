@@ -19,9 +19,9 @@ def createFolder(folder):
 createFolder(f"{WORKING_DIR}/{TMP_FOLDER}")
 
 shell(f"./gradlew dependencies --configuration runtimeClasspath > {WORKING_DIR}/{TMP_FOLDER}/{DEPENDENCIES_OUTPUT}")
-shell(f"gradle properties -q | grep \"name:\" | awk '{{print $2}}' > {WORKING_DIR}/{TMP_FOLDER}/{ARTIFACT_OUTPUT}")
-shell(f"gradle properties -q | grep \"version:\" | awk '{{print $2}}' > {WORKING_DIR}/{TMP_FOLDER}/{VERSION_OUTPUT}")
-shell(f"gradle properties -q | grep \"group:\" | awk '{{print $2}}' > {WORKING_DIR}/{TMP_FOLDER}/{VERSION_OUTPUT}")
+shell(f"gradle properties -q | grep \"^name:\" | awk '{{print $2}}' > {WORKING_DIR}/{TMP_FOLDER}/{ARTIFACT_OUTPUT}")
+shell(f"gradle properties -q | grep \"^version:\" | awk '{{print $2}}' > {WORKING_DIR}/{TMP_FOLDER}/{VERSION_OUTPUT}")
+shell(f"gradle properties -q | grep \"^group:\" | awk '{{print $2}}' > {WORKING_DIR}/{TMP_FOLDER}/{VERSION_OUTPUT}")
 
 raw_dependencies = open(f"{WORKING_DIR}/{TMP_FOLDER}/{DEPENDENCIES_OUTPUT}", "r").read()
 
