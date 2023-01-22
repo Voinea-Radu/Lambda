@@ -90,5 +90,5 @@ jobs:
       - name: "Updating remote raport"
         run: |
           wget https://raw.githubusercontent.com/L1ghtDream/raport/cdn/update_raport.sh
-          #sh update_raport.sh  [raport_url]                         [artifact]          [version]         [github_access_token]
-          sh update_raport.sh   https://github.com/L1ghtDream/raport ${{ env.ARTIFACT }} ${{ env.VERSION } ${{ secrets.PERSONAL_TOKEN }}
+          #sh update_raport.sh  [raport_url]                         [artifact]          [version]          [github_access_token]
+          sh update_raport.sh   https://github.com/L1ghtDream/raport ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ secrets.PERSONAL_TOKEN }}
