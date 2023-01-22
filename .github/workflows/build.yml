@@ -91,4 +91,4 @@ jobs:
         run: |
           export RAPORT_URL=https://github.com/L1ghtDream/raport
           wget https://raw.githubusercontent.com/L1ghtDream/raport/cdn/update_raport.sh
-          sh update.sh
+          sh update_raport.sh
