@@ -1,4 +1,4 @@
-# 
+# Lambda
 
 ![Build](https://github.com/L1ghtDream/Lambda/actions/workflows/build.yml/badge.svg)
 ![Version](https://img.shields.io/badge/Version-3.7.2-red.svg)
@@ -23,8 +23,8 @@ If you want to use an older version that is not avanible in https://repo.lightdr
 ```xml
 <dependenies>
     <dependency>
-        <groupId></groupId>
-        <artifactId></artifactId>
+        <groupId>dev.lightdream</groupId>
+        <artifactId>lambda</artifactId>
         <version>3.7.2</version>
     </dependency>
 </dependenies>
@@ -47,7 +47,7 @@ If you want to use an older version that is not avanible in https://repo.lightdr
 <dependencies>
     <dependency>
         <groupId>com.github.L1ghtDream</groupId>
-        <artifactId></artifactId>
+        <artifactId>lambda</artifactId>
         <version>3.7.2</version>
     </dependency>
 </dependencies>
@@ -71,7 +71,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation "::3.7.2"
+    implementation "dev.lightdream:lambda:3.7.2"
 }
 ```
   </details>
@@ -86,7 +86,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation "com.github.L1ghtDream::3.7.2"
+    implementation "com.github.L1ghtDream:lambda:3.7.2"
 }
 ```
   </details>
@@ -106,7 +106,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation("::3.7.2")
+    implementation("dev.lightdream:lambda:3.7.2")
 }
 ```
   </details>
@@ -121,7 +121,7 @@ repositories {
 
 ```kotlin
 dependencies {
-    implementation("com.github.L1ghtDream::3.7.2")
+    implementation("com.github.L1ghtDream:lambda:3.7.2")
 }
 ```
 
