@@ -90,7 +90,7 @@ jobs:
           REPOSITORY: ${{ github.REPOSITORY }}
           REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
 
-      - name: "Updating remote raport"
+      - name: "Updating remote report"
         run: |
           curl -s https://raw.githubusercontent.com/L1ghtDream/report/cdn/update_report.sh | bash /dev/stdin \
           https://github.com/L1ghtDream/report ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ secrets.PERSONAL_TOKEN }}
