@@ -6,6 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # ===== SETUPS ======
+
       - name: Setup codebase
         uses: actions/checkout@v2
 
@@ -15,8 +17,16 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: "Setup Python3"
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+
+
+      # ===== BUILD ======
 
       - name: Execute Gradle build
         run: gradle build
@@ -27,6 +37,10 @@ jobs:
           echo "ARTIFACT=$(gradle properties -q | grep "name:" | awk '{print $2}')" >> $GITHUB_ENV
           echo "GROUP=$(gradle properties -q | grep "group:" | awk '{print $2}')" >> $GITHUB_ENV
           echo "REPOSITORY_NAME=$(echo ${{ github.repository }} | awk -F'/' '{print $2}')" >> $GITHUB_ENV
+
+
+      # ===== PUBLISH ======
+
       - name: Uploading artifacts
         run: |
           touch ~/.gradle/gradle.properties
@@ -42,6 +56,7 @@ jobs:
           
           gradle publishGitHub || echo "Failed to publish to GitHub"
           gradle publishGitLab || echo "Failed to publish to GitLab"
+
       - name: Automatic Releases
         uses: marvinpinto/action-automatic-releases@latest
         with:
@@ -51,6 +66,10 @@ jobs:
           title: "${{ env.VERSION }}"
           files: |
             build/libs/*.jar
+
+
+      # ===== RENDERS ======
+
       - name: "README.md Render"
         uses: varunsridharan/action-dynamic-readme@main
         with:
@@ -68,21 +87,8 @@ jobs:
           REPOSITORY: ${{ github.REPOSITORY }}
           REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
 
-      - name: "Setup Python3"
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10' 
-
-      - name: "Updating remote rapoort"
+      - name: "Updating remote raport"
         run: |
-          python3 run/dependencies.py
-          git clone https://github.com/L1ghtDream/raport
-          cp run/process.data raport/process.data
-          cd raport
-          git add *
-          git checkout -b "${{ env.ARTIFACT }}/${{ env.VERSION }}"
-          git config --global user.email "admin@voinearadu.com"
-          git config --global user.name "Radu Voinea"
-          git commit -m "${{ env.ARTIFACT }}/${{ env.VERSION }}"
-          git remote set-url origin https://L1ghtDream:${{ secrets.PERSONAL_TOKEN }}@github.com/L1ghtDream/raport
-          git push --set-upstream origin ${{ env.ARTIFACT }}/${{ env.VERSION }}
+          export RAPORT_URL=https://github.com/L1ghtDream/raport
+          wget https://raw.githubusercontent.com/L1ghtDream/raport/cdn/update_raport.sh
+          sh update.sh
