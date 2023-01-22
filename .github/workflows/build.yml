@@ -1,3 +1,9 @@
+# This script requires the following secrets to be set in the repository settings:
+# - GITLAB_AUTH_HEADER_VALUE
+# - PERSONAL_TOKEN
+# - SELF_PASSWORD
+#
+
 name: Build
 
 on: [ push ]
@@ -28,20 +34,30 @@ jobs:
 
       # ===== BUILD ======
 
+
       - name: Execute Gradle build
         run: gradle build
 
-      - name: Set env variable
+
+      # ===== EXTERNAL SCRIPTS =====
+
+
+      - name: External scripts
         run: |
-          wget https://raw.githubusercontent.com/L1ghtDream/report/cdn/environment_variables.sh
-          sh environment_variables.sh ${{ github.REPOSITORY }}
+          curl -s https://raw.githubusercontent.com/L1ghtDream/report/cdn/environment_variables.sh | bash /dev/stdin \
+          ${{ github.REPOSITORY }}
+          mkdir -p tmp
+          cd tmp
+          wget https://raw.githubusercontent.com/L1ghtDream/report/cdn/README-template.md
+
 
       # ===== PUBLISH ======
 
+
       - name: Uploading artifacts
         run: |
-          wget https://raw.githubusercontent.com/L1ghtDream/report/cdn/publish.sh
-          sh publish.sh ${{ secrets.GITLAB_AUTH_HEADER_VALUE }} ${{ github.REPOSITORY }} ${{ secrets.GITHUB_TOKEN }} ${{ secrets.SELF_PASSWORD }}
+          curl -s https://raw.githubusercontent.com/L1ghtDream/report/cdn/publish.sh | bash /dev/stdin \
+          ${{ secrets.GITLAB_AUTH_HEADER_VALUE }} ${{ github.REPOSITORY }} ${{ secrets.GITHUB_TOKEN }} ${{ secrets.SELF_PASSWORD }}
 
       - name: Automatic Releases
         uses: marvinpinto/action-automatic-releases@latest
@@ -53,7 +69,9 @@ jobs:
           files: |
             build/libs/*.jar
 
+
       # ===== RENDERS ======
+
 
       - name: "README.md Render"
         uses: varunsridharan/action-dynamic-readme@main
@@ -62,7 +80,7 @@ jobs:
           committer_email: "contact@voienaradu.com"
           commit_message: "Updated README.md versions"
           files: |
-            template/README-template.md=README.md
+            tmp/README-template.md=README.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ env.VERSION }}
@@ -74,5 +92,5 @@ jobs:
 
       - name: "Updating remote raport"
         run: |
-          wget https://raw.githubusercontent.com/L1ghtDream/report/cdn/update_report.sh
-          sh update_report.sh https://github.com/L1ghtDream/report ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ secrets.PERSONAL_TOKEN }}
+          curl -s https://raw.githubusercontent.com/L1ghtDream/report/cdn/update_report.sh | bash /dev/stdin \
+          https://github.com/L1ghtDream/report ${{ env.ARTIFACT }} ${{ env.VERSION }} ${{ secrets.PERSONAL_TOKEN }}
