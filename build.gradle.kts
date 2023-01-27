@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "dev.lightdream"
-version = "3.8.0"
+version = "3.8.1"
 
 repositories {
     mavenCentral()
@@ -22,7 +22,7 @@ java {
 
 dependencies {
     // LightDream
-    implementation("dev.lightdream:logger:+")
+    implementation("dev.lightdream:logger:3.1.0")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.24")
