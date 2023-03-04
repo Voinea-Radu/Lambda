@@ -1,7 +1,7 @@
 # Lambda
 
 ![Build](https://github.com/L1ghtDream/Lambda/actions/workflows/build.yml/badge.svg)
-![Version](https://img.shields.io/badge/Version-3.8.1-red.svg)
+![Version](https://img.shields.io/badge/Version-4.0.0-red.svg)
 
 ## Use
 
@@ -25,7 +25,7 @@ If you want to use an older version that is not avanible in https://repo.lightdr
     <dependency>
         <groupId>dev.lightdream</groupId>
         <artifactId>lambda</artifactId>
-        <version>3.8.1</version>
+        <version>4.0.0</version>
     </dependency>
 </dependenies>
 ```
@@ -48,7 +48,7 @@ If you want to use an older version that is not avanible in https://repo.lightdr
     <dependency>
         <groupId>com.github.L1ghtDream</groupId>
         <artifactId>lambda</artifactId>
-        <version>3.8.1</version>
+        <version>4.0.0</version>
     </dependency>
 </dependencies>
 ```
@@ -71,7 +71,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation "dev.lightdream:lambda:3.8.1"
+    implementation "dev.lightdream:lambda:4.0.0"
 }
 ```
   </details>
@@ -86,7 +86,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation "com.github.L1ghtDream:lambda:3.8.1"
+    implementation "com.github.L1ghtDream:lambda:4.0.0"
 }
 ```
   </details>
@@ -98,15 +98,15 @@ dependencies {
   <details>
 <summary>repo.lightdream.dev</summary>
 
-```groovy
+```kotlin
 repositories {
-    maven { url "https://repo.lightdream.dev/" }
+    maven("https://repo.lightdream.dev/")
 }
 ```
 
-```groovy
+```kotlin
 dependencies {
-    implementation("dev.lightdream:lambda:3.8.1")
+    implementation("dev.lightdream:lambda:4.0.0")
 }
 ```
   </details>
@@ -121,7 +121,7 @@ repositories {
 
 ```kotlin
 dependencies {
-    implementation("com.github.L1ghtDream:lambda:3.8.1")
+    implementation("com.github.L1ghtDream:lambda:4.0.0")
 }
 ```
 
