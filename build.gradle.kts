@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("java-library")
     id("maven-publish")
 }
 
@@ -11,10 +12,6 @@ repositories {
     maven ("https://repo.lightdream.dev/")
 }
 
-configurations.all {
-    resolutionStrategy.cacheDynamicVersionsFor(10, "seconds")
-}
-
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -22,24 +19,16 @@ java {
 
 dependencies {
     // LightDream
-    implementation("dev.lightdream:logger:3.1.0")
+    api(libs.lightdream.logger)
 
     // Lombok
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
-}
-
-configurations.all {
-    resolutionStrategy.cacheDynamicVersionsFor(10, "seconds")
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-tasks.withType<Jar> {
-    archiveFileName.set("${rootProject.name}.jar")
 }
 
 publishing {
@@ -49,10 +38,6 @@ publishing {
         }
     }
     repositories {
-        val gitlabURL = project.findProperty("gitlab.url") ?: ""
-        val gitlabHeaderName = project.findProperty("gitlab.auth.header.name") ?: ""
-        val gitlabHeaderValue = project.findProperty("gitlab.auth.header.value") ?: ""
-
         val githubURL = project.findProperty("github.url") ?: ""
         val githubUsername = project.findProperty("github.auth.username") ?: ""
         val githubPassword = project.findProperty("github.auth.password") ?: ""
@@ -60,17 +45,6 @@ publishing {
         val selfURL = project.findProperty("self.url") ?: ""
         val selfUsername = project.findProperty("self.auth.username") ?: ""
         val selfPassword = project.findProperty("self.auth.password") ?: ""
-
-        maven(url = gitlabURL as String) {
-            name = "gitlab"
-            credentials(HttpHeaderCredentials::class) {
-                name = gitlabHeaderName as String
-                value = gitlabHeaderValue as String
-            }
-            authentication {
-                create<HttpHeaderAuthentication>("header")
-            }
-        }
 
         maven(url = githubURL as String) {
             name = "github"
@@ -88,11 +62,6 @@ publishing {
             }
         }
     }
-}
-
-tasks.register("publishGitLab") {
-    dependsOn("publishMavenPublicationToGitlabRepository")
-    description = "Publishes to GitLab"
 }
 
 tasks.register("publishGitHub") {
