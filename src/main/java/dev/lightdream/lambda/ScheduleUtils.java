@@ -58,6 +58,18 @@ public class ScheduleUtils {
         return timerObject;
     }
 
+    public static Timer runTaskTimer(LambdaExecutor task, long delay, long timer) {
+        Timer timerObject = new Timer();
+        timerObject.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                task.execute();
+            }
+        }, delay, timer);
+
+        return timerObject;
+    }
+
     /**
      * Schedules a task to be executed after a delay repeatedly on a timer asynchronously
      *
@@ -74,6 +86,19 @@ public class ScheduleUtils {
                 runTaskAsync(()->{
                     task.execute(timerObject);
                 });
+            }
+        }, delay, timer);
+
+        return timerObject;
+    }
+
+    public static Timer runTaskTimerAsync(LambdaExecutor task, long delay, long timer) {
+        Timer timerObject = new Timer();
+
+        timerObject.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runTaskAsync(task);
             }
         }, delay, timer);
 
