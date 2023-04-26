@@ -1,5 +1,6 @@
 package dev.lightdream.lambda;
 
+import dev.lightdream.lambda.lambda.ArgLambdaExecutor;
 import dev.lightdream.lambda.lambda.LambdaExecutor;
 
 import java.util.Timer;
@@ -45,12 +46,12 @@ public class ScheduleUtils {
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
      */
-    public static Timer runTaskTimer(LambdaExecutor task, long delay, long timer) {
+    public static Timer runTaskTimer(ArgLambdaExecutor<Timer> task, long delay, long timer) {
         Timer timerObject = new Timer();
         timerObject.schedule(new TimerTask() {
             @Override
             public void run() {
-                task.execute();
+                task.execute(timerObject);
             }
         }, delay, timer);
 
@@ -64,13 +65,15 @@ public class ScheduleUtils {
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
      */
-    public static Timer runTaskTimerAsync(LambdaExecutor task, long delay, long timer) {
+    public static Timer runTaskTimerAsync(ArgLambdaExecutor<Timer> task, long delay, long timer) {
         Timer timerObject = new Timer();
 
         timerObject.schedule(new TimerTask() {
             @Override
             public void run() {
-                runTaskAsync(task);
+                runTaskAsync(()->{
+                    task.execute(timerObject);
+                });
             }
         }, delay, timer);
 
