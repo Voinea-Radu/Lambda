@@ -1,138 +1,79 @@
+
 # Lambda
 
-![Build](https://github.com/L1ghtDream/Lambda/actions/workflows/build.yml/badge.svg)
-![Version](https://img.shields.io/badge/Version-4.1.1-red.svg)
+![Build](../../actions/workflows/build.yml/badge.svg)
+![Version](https://img.shields.io/badge/Version-4.1.5-red.svg)
 
-## Use
+# Table Of Contents
+1. [Description](#description)
+2. [How to add to your project](#how-to-add-to-your-project)
+3. [How to use](#how-to-use)
 
-If you want to use an older version that is not avanible in https://repo.lightdream.dev you can try using https://archive-repo.lightdream.dev
+## Description
+A simple lambda library used by many others proprietary libs and projects. Also implements a scheduler util class. Allows to pass functions or methods as arguments to other methods
 
-<details>
-  <summary>Maven</summary><blockquote>
-  <details><summary>repo.lightdream.dev</summary>
+## How to add to your project
 
+
+The artifact can be found at the repository https://repo.lightdream.dev or https://jitpack.io (under com.github.L1ghtDream instead of dev.lightdream)
+
+### Maven
 ```xml
 <repositories>
     <repository>
         <id>lightdream-repo</id>
         <url>https://repo.lightdream.dev/</url>
     </repository>
-</repositories>
-```
-
-```xml
-<dependenies>
-    <dependency>
-        <groupId>dev.lightdream</groupId>
-        <artifactId>lambda</artifactId>
-        <version>4.1.1</version>
-    </dependency>
-</dependenies>
-```
-
-  </details>
-
-  <details><summary  style="padding-left:25px">jitpack.io</summary>
-
-```xml
-<repositories>
     <repository>
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
     </repository>
 </repositories>
 ```
-
 ```xml
 <dependencies>
     <dependency>
+        <groupId>dev.lightdream</groupId>
+        <artifactId>lambda</artifactId>
+        <version>4.1.5</version>
+    </dependency>
+    <dependency>
         <groupId>com.github.L1ghtDream</groupId>
         <artifactId>lambda</artifactId>
-        <version>4.1.1</version>
+        <version>4.1.5</version>
     </dependency>
 </dependencies>
 ```
 
-</blockquote></details>
-
-</details>
-
-<details><summary>Gradle</summary><blockquote>
-
-  <details><summary>Groovy</summary><blockquote>
-
-  <details><summary>repo.lightdream.dev</summary>
-
+### Gradle - Groovy DSL
 ```groovy
 repositories {
-    maven("https://repo.lightdream.dev/")
-}
-```
-
-```groovy
-dependencies {
-    implementation "dev.lightdream:lambda:4.1.1"
-}
-```
-  </details>
-
-  <details><summary>jitpack.io</summary>
-
-```groovy
-repositories {
+    maven { url "https://repo.lightdream.dev/" }
     maven { url "https://jitpack.io" }
 }
-```
 
-```groovy
 dependencies {
-    implementation "com.github.L1ghtDream:lambda:4.1.1"
+    implementation "dev.lightdream:lambda:4.1.5"
+    implementation "com.github.L1ghtDream:lambda:4.1.5"
 }
 ```
-  </details>
-</blockquote></details>
 
-  <details>
-    <summary>Kotlin</summary><blockquote>
-
-  <details>
-<summary>repo.lightdream.dev</summary>
-
+### Gradle - Kotlin DSL
 ```kotlin
 repositories {
     maven("https://repo.lightdream.dev/")
-}
-```
-
-```kotlin
-dependencies {
-    implementation("dev.lightdream:lambda:4.1.1")
-}
-```
-  </details>
-  <details>
-  <summary style="padding-left:50px">jitpack.io</summary>
-
-```kotlin
-repositories {
     maven("https://jitpack.io")
 }
-```
 
-```kotlin
 dependencies {
-    implementation("com.github.L1ghtDream:lambda:4.1.1")
+    implementation("dev.lightdream:lambda:4.1.5")
+    implementation("com.github.L1ghtDream:lambda:4.1.5")
 }
 ```
 
+If you want to use an older version that is not available in https://repo.lightdream.dev you can try using https://archive-repo.lightdream.dev
 
 
-</details>
+## How to use
 
-  </blockquote></details>
-
-</blockquote></details>
-
-
-
-
+Can be found in the [repository](/src/main/java/example)
