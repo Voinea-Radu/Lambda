@@ -2,7 +2,7 @@
 # Lambda
 
 ![Build](../../actions/workflows/build.yml/badge.svg)
-![Version](https://img.shields.io/badge/Version-4.1.5-red.svg)
+![Version](https://img.shields.io/badge/Version-4.1.6-red.svg)
 
 # Table Of Contents
 1. [Description](#description)
@@ -35,12 +35,12 @@ The artifact can be found at the repository https://repo.lightdream.dev or https
     <dependency>
         <groupId>dev.lightdream</groupId>
         <artifactId>lambda</artifactId>
-        <version>4.1.5</version>
+        <version>4.1.6</version>
     </dependency>
     <dependency>
         <groupId>com.github.L1ghtDream</groupId>
         <artifactId>lambda</artifactId>
-        <version>4.1.5</version>
+        <version>4.1.6</version>
     </dependency>
 </dependencies>
 ```
@@ -53,8 +53,8 @@ repositories {
 }
 
 dependencies {
-    implementation "dev.lightdream:lambda:4.1.5"
-    implementation "com.github.L1ghtDream:lambda:4.1.5"
+    implementation "dev.lightdream:lambda:4.1.6"
+    implementation "com.github.L1ghtDream:lambda:4.1.6"
 }
 ```
 
@@ -66,8 +66,8 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.lightdream:lambda:4.1.5")
-    implementation("com.github.L1ghtDream:lambda:4.1.5")
+    implementation("dev.lightdream:lambda:4.1.6")
+    implementation("com.github.L1ghtDream:lambda:4.1.6")
 }
 ```
 
