@@ -1,3 +1,7 @@
+[versions]
+project = "4.1.7"
+
+
 [libraries]
 lombok = { module = "org.projectlombok:lombok", version = "1.18.26" }
 lightdream_logger = { module = "dev.lightdream:logger", version = "3.2.8" }

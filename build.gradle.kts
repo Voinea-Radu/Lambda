@@ -5,11 +5,11 @@ plugins {
 }
 
 group = "dev.lightdream"
-version = "4.1.7"
+version = libs.versions.project.get()
 
 repositories {
     mavenCentral()
-    maven ("https://repo.lightdream.dev/")
+    maven("https://repo.lightdream.dev/")
 }
 
 java {
