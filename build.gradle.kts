@@ -23,7 +23,21 @@ dependencies {
 
     // Lombok
     compileOnly(libs.lombok)
+    testCompileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
+
+    // Tests
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }
 
 java {
