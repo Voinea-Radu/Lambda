@@ -40,12 +40,14 @@ public class ScheduleUtils {
     }
 
     /**
+     * @deprecated
      * Schedules a task to be executed after a delay repeatedly on a timer
      *
      * @param task  The task to be executed
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
      */
+    @Deprecated
     public static Timer runTaskTimer(ArgLambdaExecutor<Timer> task, long delay, long timer) {
         Timer timerObject = new Timer();
         timerObject.schedule(new TimerTask() {
@@ -62,10 +64,31 @@ public class ScheduleUtils {
      * Schedules a task to be executed after a delay repeatedly on a timer
      *
      * @param task  The task to be executed
+     * @param timer The timer in milliseconds
+     */
+    @SuppressWarnings("UnusedReturnValue")
+    public static Timer runTaskTimer(ArgLambdaExecutor<Timer> task, long timer) {
+        Timer timerObject = new Timer();
+        timerObject.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                task.execute(timerObject);
+            }
+        }, 0, timer);
+
+        return timerObject;
+    }
+
+    /**
+     * @deprecated
+     * Schedules a task to be executed after a delay repeatedly on a timer
+     *
+     * @param task  The task to be executed
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
      * @return The timer object
      */
+    @Deprecated
     public static Timer runTaskTimer(LambdaExecutor task, long delay, long timer) {
         Timer timerObject = new Timer();
         timerObject.schedule(new TimerTask() {
@@ -79,12 +102,33 @@ public class ScheduleUtils {
     }
 
     /**
+     * @deprecated
+     * Schedules a task to be executed after a delay repeatedly on a timer
+     *
+     * @param task  The task to be executed
+     * @param timer The timer in milliseconds
+     * @return The timer object
+     */
+    public static Timer runTaskTimer(LambdaExecutor task, long timer) {
+        Timer timerObject = new Timer();
+        timerObject.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                task.execute();
+            }
+        }, 0, timer);
+
+        return timerObject;
+    }
+
+    /**
      * Schedules a task to be executed after a delay repeatedly on a timer asynchronously
      *
      * @param task  The task to be executed
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
      */
+    @Deprecated
     public static Timer runTaskTimerAsync(ArgLambdaExecutor<Timer> task, long delay, long timer) {
         Timer timerObject = new Timer();
 
@@ -99,12 +143,35 @@ public class ScheduleUtils {
     }
 
     /**
+     * @deprecated
+     * Schedules a task to be executed after a delay repeatedly on a timer asynchronously
+     *
+     * @param task  The task to be executed
+     * @param timer The timer in milliseconds
+     */
+    @Deprecated
+    public static Timer runTaskTimerAsync(ArgLambdaExecutor<Timer> task, long timer) {
+        Timer timerObject = new Timer();
+
+        timerObject.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runTaskAsync(() -> task.execute(timerObject));
+            }
+        }, 0, timer);
+
+        return timerObject;
+    }
+
+    /**
+     * @deprecated
      * Schedules a task to be executed after a delay repeatedly on a timer asynchronously
      *
      * @param task  The task to be executed
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
      */
+    @Deprecated
     public static Timer runTaskTimerAsync(LambdaExecutor task, long delay, long timer) {
         Timer timerObject = new Timer();
 
@@ -114,6 +181,25 @@ public class ScheduleUtils {
                 runTaskAsync(task);
             }
         }, delay, timer);
+
+        return timerObject;
+    }
+
+    /**
+     * Schedules a task to be executed after a delay repeatedly on a timer asynchronously
+     *
+     * @param task  The task to be executed
+     * @param timer The timer in milliseconds
+     */
+    public static Timer runTaskTimerAsync(LambdaExecutor task, long timer) {
+        Timer timerObject = new Timer();
+
+        timerObject.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runTaskAsync(task);
+            }
+        }, timer);
 
         return timerObject;
     }

@@ -68,7 +68,7 @@ public class LambdaTest {
             if (executed.get() == 5) {
                 timer.cancel();
             }
-        }, 0, 1000);
+        }, 1000);
 
         Thread.sleep(6000);
 
