@@ -40,12 +40,10 @@ public class ScheduleUtils {
     }
 
     /**
-     * @deprecated
-     * Schedules a task to be executed after a delay repeatedly on a timer
-     *
      * @param task  The task to be executed
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
+     * @deprecated Schedules a task to be executed after a delay repeatedly on a timer
      */
     @Deprecated
     public static Timer runTaskTimer(ArgLambdaExecutor<Timer> task, long delay, long timer) {
@@ -80,13 +78,11 @@ public class ScheduleUtils {
     }
 
     /**
-     * @deprecated
-     * Schedules a task to be executed after a delay repeatedly on a timer
-     *
      * @param task  The task to be executed
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
      * @return The timer object
+     * @deprecated Schedules a task to be executed after a delay repeatedly on a timer
      */
     @Deprecated
     public static Timer runTaskTimer(LambdaExecutor task, long delay, long timer) {
@@ -102,12 +98,10 @@ public class ScheduleUtils {
     }
 
     /**
-     * @deprecated
-     * Schedules a task to be executed after a delay repeatedly on a timer
-     *
      * @param task  The task to be executed
      * @param timer The timer in milliseconds
      * @return The timer object
+     * @deprecated Schedules a task to be executed after a delay repeatedly on a timer
      */
     public static Timer runTaskTimer(LambdaExecutor task, long timer) {
         Timer timerObject = new Timer();
@@ -143,11 +137,9 @@ public class ScheduleUtils {
     }
 
     /**
-     * @deprecated
-     * Schedules a task to be executed after a delay repeatedly on a timer asynchronously
-     *
      * @param task  The task to be executed
      * @param timer The timer in milliseconds
+     * @deprecated Schedules a task to be executed after a delay repeatedly on a timer asynchronously
      */
     @Deprecated
     public static Timer runTaskTimerAsync(ArgLambdaExecutor<Timer> task, long timer) {
@@ -164,12 +156,10 @@ public class ScheduleUtils {
     }
 
     /**
-     * @deprecated
-     * Schedules a task to be executed after a delay repeatedly on a timer asynchronously
-     *
      * @param task  The task to be executed
      * @param delay The delay in milliseconds
      * @param timer The timer in milliseconds
+     * @deprecated Schedules a task to be executed after a delay repeatedly on a timer asynchronously
      */
     @Deprecated
     public static Timer runTaskTimerAsync(LambdaExecutor task, long delay, long timer) {
@@ -199,7 +189,7 @@ public class ScheduleUtils {
             public void run() {
                 runTaskAsync(task);
             }
-        }, timer);
+        }, 0, timer);
 
         return timerObject;
     }
