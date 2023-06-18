@@ -139,7 +139,6 @@ public class ScheduleUtils {
     /**
      * @param task  The task to be executed
      * @param timer The timer in milliseconds
-     * @deprecated Schedules a task to be executed after a delay repeatedly on a timer asynchronously
      */
     public static Timer runTaskTimerAsync(ArgLambdaExecutor<Timer> task, long timer) {
         Timer timerObject = new Timer();
