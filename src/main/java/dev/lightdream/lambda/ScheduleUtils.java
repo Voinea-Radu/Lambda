@@ -197,7 +197,11 @@ public class ScheduleUtils {
      *
      * @param task The task to be executed
      */
-    public static void runTaskAsync(LambdaExecutor task) {
-        new Thread(task::execute).start();
+    @SuppressWarnings("UnusedReturnValue")
+    public static Thread runTaskAsync(LambdaExecutor task) {
+        Thread thread = new Thread(task::execute);
+        thread.start();
+
+        return thread;
     }
 }
