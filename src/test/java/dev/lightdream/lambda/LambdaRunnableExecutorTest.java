@@ -2,6 +2,7 @@ package dev.lightdream.lambda;
 
 import dev.lightdream.lambda.lambda.*;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -9,7 +10,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LambdaTest {
+public class LambdaRunnableExecutorTest {
+
+    @BeforeAll
+    public static void init() {
+        ScheduleManager manager = new ScheduleManager(new ScheduleManager.Builder());
+        manager.setStatic();
+    }
 
     @Test
     public void testLambdaExecutors() {
@@ -50,7 +57,7 @@ public class LambdaTest {
     public void testRunTaskLater() {
         AtomicBoolean executed = new AtomicBoolean(false);
 
-        ScheduleUtils.runTaskLater(() -> executed.set(true), 1000);
+        ScheduleManager.get().runTaskLater(() -> executed.set(true), 1000);
 
         Thread.sleep(1500);
 
@@ -62,15 +69,18 @@ public class LambdaTest {
     public void testRunTaskTimer() {
         AtomicInteger executed = new AtomicInteger(0);
 
-        ScheduleUtils.runTaskTimer(timer -> {
-            executed.getAndAdd(1);
+        ScheduleManager.get().runTaskTimer(new RunnableExecutor() {
+            @Override
+            public void execute() {
+                executed.getAndAdd(1);
 
-            if (executed.get() == 5) {
-                timer.cancel();
+                if (executed.get() == 5) {
+                    this.cancel();
+                }
             }
         }, 1000);
 
-        Thread.sleep(6000);
+        Thread.sleep(7000);
 
         assertEquals(5, executed.get());
     }
