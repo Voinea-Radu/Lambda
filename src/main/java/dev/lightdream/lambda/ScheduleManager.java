@@ -1,12 +1,13 @@
 package dev.lightdream.lambda;
 
 import dev.lightdream.lambda.lambda.LambdaExecutor;
-import dev.lightdream.lambda.lambda.RunnableExecutor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.TimerTask;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("unused")
 public class ScheduleManager {
@@ -30,18 +31,18 @@ public class ScheduleManager {
     }
 
     public void runTaskLater(LambdaExecutor task, long delay) {
-        this.scheduledExecutor.schedule(new TimerTask() {
+        this.scheduledExecutor.schedule(new CancelableTimeTask() {
             @Override
-            public void run() {
+            public void execute() {
                 task.execute();
             }
         }, delay, TimeUnit.MILLISECONDS);
     }
 
-    public TimerTask runTaskLaterAsync(LambdaExecutor executor, long delay) {
-        TimerTask task = new TimerTask() {
+    public CancelableTimeTask runTaskLaterAsync(LambdaExecutor executor, long delay) {
+        CancelableTimeTask task = new CancelableTimeTask() {
             @Override
-            public void run() {
+            public void execute() {
                 runTaskAsync(executor);
             }
         };
@@ -51,20 +52,31 @@ public class ScheduleManager {
         return task;
     }
 
-    public void runTaskLaterAsync(TimerTask task, long delay) {
+    public void runTaskLaterAsync(CancelableTimeTask task, long delay) {
         this.scheduledExecutor.schedule(task, delay, TimeUnit.MILLISECONDS);
     }
 
-    public void runTaskTimer(RunnableExecutor task, long timer) {
-        ScheduledFuture<?> future = this.scheduledExecutor.scheduleAtFixedRate
-                (task::internalExecute, 0, timer, TimeUnit.MILLISECONDS);
-        task.setScheduledFuture(future);
+    public CancelableTimeTask runTaskTimer(LambdaExecutor executor, long timer) {
+        CancelableTimeTask task = new CancelableTimeTask() {
+            @Override
+            public void execute() {
+                executor.execute();
+            }
+        };
+
+        this.scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
+
+        return task;
     }
 
-    public TimerTask runTaskTimerAsync(LambdaExecutor executor, long timer) {
-        TimerTask task = new TimerTask() {
+    public void runTaskTimer(CancelableTimeTask task, long timer) {
+        this.scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
+    }
+
+    public CancelableTimeTask  runTaskTimerAsync(LambdaExecutor executor, long timer) {
+        CancelableTimeTask task = new CancelableTimeTask() {
             @Override
-            public void run() {
+            public void execute() {
                 runTaskAsync(executor);
             }
         };
@@ -74,7 +86,7 @@ public class ScheduleManager {
         return task;
     }
 
-    public void runTaskTimerAsync(TimerTask task, long timer) {
+    public void runTaskTimerAsync(CancelableTimeTask task, long timer) {
         this.scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
     }
 

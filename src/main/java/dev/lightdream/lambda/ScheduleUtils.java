@@ -1,9 +1,6 @@
 package dev.lightdream.lambda;
 
 import dev.lightdream.lambda.lambda.LambdaExecutor;
-import dev.lightdream.lambda.lambda.RunnableExecutor;
-
-import java.util.TimerTask;
 
 @SuppressWarnings("unused")
 public class ScheduleUtils {
@@ -12,23 +9,27 @@ public class ScheduleUtils {
         ScheduleManager.get().runTaskLater(task, delay);
     }
 
-    public static TimerTask runTaskLaterAsync(LambdaExecutor task, long delay) {
+    public static CancelableTimeTask runTaskLaterAsync(LambdaExecutor task, long delay) {
         return ScheduleManager.get().runTaskLaterAsync(task, delay);
     }
 
-    public static void runTaskLaterAsync(TimerTask task, long delay) {
+    public static void runTaskLaterAsync(CancelableTimeTask task, long delay) {
         ScheduleManager.get().runTaskLaterAsync(task, delay);
     }
 
-    public static void runTaskTimer(RunnableExecutor task, long timer) {
+    public static CancelableTimeTask runTaskTimer(LambdaExecutor task, long timer) {
+        return ScheduleManager.get().runTaskTimer(task, timer);
+    }
+
+    public static void runTaskTimer(CancelableTimeTask task, long timer) {
         ScheduleManager.get().runTaskTimer(task, timer);
     }
 
-    public static TimerTask runTaskTimerAsync(LambdaExecutor task, long timer) {
+    public static CancelableTimeTask runTaskTimerAsync(LambdaExecutor task, long timer) {
         return ScheduleManager.get().runTaskTimerAsync(task, timer);
     }
 
-    public static void runTaskTimerAsync(TimerTask task, long timer) {
+    public static void runTaskTimerAsync(CancelableTimeTask task, long timer) {
         ScheduleManager.get().runTaskTimerAsync(task, timer);
     }
 

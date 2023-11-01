@@ -69,7 +69,7 @@ public class LambdaRunnableExecutorTest {
     public void testRunTaskTimer() {
         AtomicInteger executed = new AtomicInteger(0);
 
-        ScheduleManager.get().runTaskTimer(new RunnableExecutor() {
+        ScheduleManager.get().runTaskTimer(new CancelableTimeTask() {
             @Override
             public void execute() {
                 executed.getAndAdd(1);
