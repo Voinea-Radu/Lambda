@@ -38,13 +38,21 @@ public class ScheduleManager {
         }, delay, TimeUnit.MILLISECONDS);
     }
 
-    public void runTaskLaterAsync(LambdaExecutor task, long delay) {
-        this.scheduledExecutor.schedule(new TimerTask() {
+    public TimerTask runTaskLaterAsync(LambdaExecutor executor, long delay) {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                runTaskAsync(task);
+                runTaskAsync(executor);
             }
-        }, delay, TimeUnit.MILLISECONDS);
+        };
+
+        runTaskLaterAsync(task, delay);
+
+        return task;
+    }
+
+    public void runTaskLaterAsync(TimerTask task, long delay) {
+        this.scheduledExecutor.schedule(task, delay, TimeUnit.MILLISECONDS);
     }
 
     public void runTaskTimer(RunnableExecutor task, long timer) {
@@ -53,13 +61,21 @@ public class ScheduleManager {
         task.setScheduledFuture(future);
     }
 
-    public void runTaskTimerAsync(LambdaExecutor task, long timer) {
-        this.scheduledExecutor.scheduleAtFixedRate(new TimerTask() {
+    public TimerTask runTaskTimerAsync(LambdaExecutor executor, long timer) {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                runTaskAsync(task);
+                runTaskAsync(executor);
             }
-        }, 0, timer, TimeUnit.MILLISECONDS);
+        };
+
+        runTaskTimerAsync(task, timer);
+
+        return task;
+    }
+
+    public void runTaskTimerAsync(TimerTask task, long timer) {
+        this.scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
     }
 
     public void runTaskAsync(LambdaExecutor task) {
@@ -73,10 +89,18 @@ public class ScheduleManager {
         private int schedulePoolSize = 1;
         private int threadPoolSize = 1;
 
-        public Builder setPoolSize(int schedulePoolSize, int threadPoolSize) {
+        public Builder setSchedulePoolSize(int schedulePoolSize) {
             this.schedulePoolSize = schedulePoolSize;
+            return this;
+        }
+
+        public Builder setThreadPoolSize(int threadPoolSize) {
             this.threadPoolSize = threadPoolSize;
             return this;
+        }
+
+        public ScheduleManager build() {
+            return new ScheduleManager(this);
         }
     }
 }
