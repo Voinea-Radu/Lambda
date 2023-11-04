@@ -23,6 +23,9 @@ public class ScheduleManager {
     }
 
     public static ScheduleManager get() {
+        if (ScheduleManager.instance == null) {
+            new ScheduleManager(new Builder()).setStatic();
+        }
         return ScheduleManager.instance;
     }
 
@@ -73,7 +76,7 @@ public class ScheduleManager {
         this.scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
     }
 
-    public CancelableTimeTask  runTaskTimerAsync(LambdaExecutor executor, long timer) {
+    public CancelableTimeTask runTaskTimerAsync(LambdaExecutor executor, long timer) {
         CancelableTimeTask task = new CancelableTimeTask() {
             @Override
             public void execute() {
