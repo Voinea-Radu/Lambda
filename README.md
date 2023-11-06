@@ -1,7 +1,7 @@
 # Lambda
 
 ![Build](../../actions/workflows/build.yml/badge.svg)
-![Version](https://img.shields.io/badge/Version-5.0.14-red.svg)
+![Version](https://img.shields.io/badge/Version-5.1.0-red.svg)
 
 # Table Of Contents
 
@@ -41,12 +41,12 @@ com.github.L1ghtDream instead of dev.lightdream)
     <dependency>
         <groupId>dev.lightdream</groupId>
         <artifactId>lambda</artifactId>
-        <version>5.0.14</version>
+        <version>5.1.0</version>
     </dependency>
     <dependency>
         <groupId>com.github.L1ghtDream</groupId>
         <artifactId>lambda</artifactId>
-        <version>5.0.14</version>
+        <version>5.1.0</version>
     </dependency>
 </dependencies>
 ```
@@ -60,8 +60,8 @@ repositories {
 }
 
 dependencies {
-    implementation "dev.lightdream:lambda:5.0.14"
-    implementation "com.github.L1ghtDream:lambda:5.0.14"
+    implementation "dev.lightdream:lambda:5.1.0"
+    implementation "com.github.L1ghtDream:lambda:5.1.0"
 }
 ```
 
@@ -74,8 +74,8 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.lightdream:lambda:5.0.14")
-    implementation("com.github.L1ghtDream:lambda:5.0.14")
+    implementation("dev.lightdream:lambda:5.1.0")
+    implementation("com.github.L1ghtDream:lambda:5.1.0")
 }
 ```
 
