@@ -4,7 +4,7 @@ project = "5.0.13"
 [libraries]
 lombok = { module = "org.projectlombok:lombok", version = "1.18.30" }
 
-junit_jupiter = { module = "org.junit.jupiter:junit-jupiter ", version = "5.10.0" }
-junit_bom = { module = "org.junit:junit-bom", version = "5.10.0" }
+junit_jupiter = { module = "org.junit.jupiter:junit-jupiter ", version = "5.10.1" }
+junit_bom = { module = "org.junit:junit-bom", version = "5.10.1" }
 
 lightdream_logger = { module = "dev.lightdream:logger", version = "3.3.15" }
