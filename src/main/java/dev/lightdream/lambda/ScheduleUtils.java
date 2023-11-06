@@ -18,6 +18,10 @@ public class ScheduleUtils {
     private static ScheduledExecutorService scheduledExecutor;
     private static ExecutorService threadExecutor;
 
+    static {
+        init(new Settings());
+    }
+
     public static void init(Settings settings) {
         ScheduleUtils.scheduledExecutor = Executors.newScheduledThreadPool(settings.schedulePoolSize());
         ScheduleUtils.threadExecutor = Executors.newFixedThreadPool(settings.threadPoolSize());
