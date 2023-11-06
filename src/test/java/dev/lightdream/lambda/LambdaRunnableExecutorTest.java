@@ -14,7 +14,7 @@ public class LambdaRunnableExecutorTest {
 
     @BeforeAll
     public static void init() {
-        ScheduleUtils.init(new ScheduleUtils.Builder());
+        ScheduleUtils.init(new ScheduleUtils.Settings());
     }
 
     @Test

@@ -3,6 +3,8 @@ package dev.lightdream.lambda;
 import dev.lightdream.lambda.lambda.LambdaExecutor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,9 +17,9 @@ public class ScheduleUtils {
     private static ScheduledExecutorService scheduledExecutor;
     private static ExecutorService threadExecutor;
 
-    public static void init(Builder builder) {
-        ScheduleUtils.scheduledExecutor = Executors.newScheduledThreadPool(builder.getSchedulePoolSize());
-        ScheduleUtils.threadExecutor = Executors.newFixedThreadPool(builder.getThreadPoolSize());
+    public static void init(Settings settings) {
+        ScheduleUtils.scheduledExecutor = Executors.newScheduledThreadPool(settings.schedulePoolSize());
+        ScheduleUtils.threadExecutor = Executors.newFixedThreadPool(settings.threadPoolSize());
     }
 
     public static void runTaskLater(LambdaExecutor task, long delay) {
@@ -84,22 +86,14 @@ public class ScheduleUtils {
         threadExecutor.execute(task::execute);
     }
 
-    @NoArgsConstructor
     @Getter
-    public static class Builder {
+    @Setter
+    @Accessors(fluent = true)
+    @NoArgsConstructor
+    public static class Settings {
 
         private int schedulePoolSize = 1;
         private int threadPoolSize = 1;
-
-        public Builder setSchedulePoolSize(int schedulePoolSize) {
-            this.schedulePoolSize = schedulePoolSize;
-            return this;
-        }
-
-        public Builder setThreadPoolSize(int threadPoolSize) {
-            this.threadPoolSize = threadPoolSize;
-            return this;
-        }
 
         public void build() {
             ScheduleUtils.init(this);
