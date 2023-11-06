@@ -27,6 +27,12 @@ dependencies {
     annotationProcessor(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
+    // Jetbrains
+    compileOnly(libs.jetbrains.annotations)
+    testCompileOnly(libs.jetbrains.annotations)
+    annotationProcessor(libs.jetbrains.annotations)
+    testAnnotationProcessor(libs.jetbrains.annotations)
+
     // Tests
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)

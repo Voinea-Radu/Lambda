@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +23,7 @@ public class ScheduleUtils {
         ScheduleUtils.threadExecutor = Executors.newFixedThreadPool(settings.threadPoolSize());
     }
 
-    public static void runTaskLater(LambdaExecutor task, long delay) {
+    public static void runTaskLater(@NotNull LambdaExecutor task, long delay) {
         scheduledExecutor.schedule(new CancelableTimeTask() {
             @Override
             public void execute() {
@@ -31,7 +32,7 @@ public class ScheduleUtils {
         }, delay, TimeUnit.MILLISECONDS);
     }
 
-    public static CancelableTimeTask runTaskLaterAsync(LambdaExecutor executor, long delay) {
+    public static @NotNull CancelableTimeTask runTaskLaterAsync(@NotNull LambdaExecutor executor, long delay) {
         CancelableTimeTask task = new CancelableTimeTask() {
             @Override
             public void execute() {
@@ -44,11 +45,11 @@ public class ScheduleUtils {
         return task;
     }
 
-    public static void runTaskLaterAsync(CancelableTimeTask task, long delay) {
+    public static void runTaskLaterAsync(@NotNull CancelableTimeTask task, long delay) {
         scheduledExecutor.schedule(task, delay, TimeUnit.MILLISECONDS);
     }
 
-    public static CancelableTimeTask runTaskTimer(LambdaExecutor executor, long timer) {
+    public static @NotNull CancelableTimeTask runTaskTimer(@NotNull LambdaExecutor executor, long timer) {
         CancelableTimeTask task = new CancelableTimeTask() {
             @Override
             public void execute() {
@@ -61,11 +62,11 @@ public class ScheduleUtils {
         return task;
     }
 
-    public static void runTaskTimer(CancelableTimeTask task, long timer) {
+    public static void runTaskTimer(@NotNull CancelableTimeTask task, long timer) {
         scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
     }
 
-    public static CancelableTimeTask runTaskTimerAsync(LambdaExecutor executor, long timer) {
+    public static @NotNull CancelableTimeTask runTaskTimerAsync(@NotNull LambdaExecutor executor, long timer) {
         CancelableTimeTask task = new CancelableTimeTask() {
             @Override
             public void execute() {
@@ -78,11 +79,11 @@ public class ScheduleUtils {
         return task;
     }
 
-    public static void runTaskTimerAsync(CancelableTimeTask task, long timer) {
+    public static void runTaskTimerAsync(@NotNull CancelableTimeTask task, long timer) {
         scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
     }
 
-    public static void runTaskAsync(LambdaExecutor task) {
+    public static void runTaskAsync(@NotNull LambdaExecutor task) {
         threadExecutor.execute(task::execute);
     }
 
