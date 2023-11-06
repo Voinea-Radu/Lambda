@@ -14,8 +14,7 @@ public class LambdaRunnableExecutorTest {
 
     @BeforeAll
     public static void init() {
-        ScheduleManager manager = new ScheduleManager(new ScheduleManager.Builder());
-        manager.setStatic();
+        ScheduleUtils.init(new ScheduleUtils.Builder());
     }
 
     @Test
@@ -57,7 +56,7 @@ public class LambdaRunnableExecutorTest {
     public void testRunTaskLater() {
         AtomicBoolean executed = new AtomicBoolean(false);
 
-        ScheduleManager.get().runTaskLater(() -> executed.set(true), 1000);
+        ScheduleUtils.runTaskLater(() -> executed.set(true), 1000);
 
         Thread.sleep(1500);
 
@@ -69,7 +68,7 @@ public class LambdaRunnableExecutorTest {
     public void testRunTaskTimer() {
         AtomicInteger executed = new AtomicInteger(0);
 
-        ScheduleManager.get().runTaskTimer(new CancelableTimeTask() {
+        ScheduleUtils.runTaskTimer(new CancelableTimeTask() {
             @Override
             public void execute() {
                 executed.getAndAdd(1);
