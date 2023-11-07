@@ -2,8 +2,8 @@ package dev.lightdream.lambda;
 
 import dev.lightdream.lambda.lambda.LambdaExecutor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
@@ -13,30 +13,36 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-@SuppressWarnings("unused")
-@Builder(builderClassName = "_Builder", toBuilder = true)
+@Builder
 @Getter
 @Setter
 @Accessors(chain = true, fluent = true)
 public class ScheduleManager {
 
-
-    private static ScheduleManager instance;
-
-    private static ScheduledExecutorService scheduledExecutor;
-    private static ExecutorService threadExecutor;
+    private static @Getter ScheduleManager instance;
 
     static {
         builder().build();
     }
 
-    @lombok.Builder.Default
-    private int schedulePoolSize = 1;
-    @lombok.Builder.Default
-    private int threadPoolSize = 1;
+    private final ScheduledExecutorService scheduledExecutor;
+    private final ExecutorService threadExecutor;
+
+    private @Default int schedulePoolSize = 1;
+    private @Default int threadPoolSize = 1;
+
+    public ScheduleManager(int schedulePoolSize, int threadPoolSize) {
+        instance = this;
+
+        this.schedulePoolSize = schedulePoolSize;
+        this.threadPoolSize = threadPoolSize;
+
+        scheduledExecutor = Executors.newScheduledThreadPool(schedulePoolSize);
+        threadExecutor = Executors.newFixedThreadPool(threadPoolSize);
+    }
 
     public static void runTaskLater(@NotNull LambdaExecutor task, long delay) {
-        scheduledExecutor.schedule(new CancelableTimeTask() {
+        instance().scheduledExecutor.schedule(new CancelableTimeTask() {
             @Override
             public void execute() {
                 task.execute();
@@ -44,6 +50,7 @@ public class ScheduleManager {
         }, delay, TimeUnit.MILLISECONDS);
     }
 
+    @SuppressWarnings("unused")
     public static @NotNull CancelableTimeTask runTaskLaterAsync(@NotNull LambdaExecutor executor, long delay) {
         CancelableTimeTask task = new CancelableTimeTask() {
             @Override
@@ -58,9 +65,10 @@ public class ScheduleManager {
     }
 
     public static void runTaskLaterAsync(@NotNull CancelableTimeTask task, long delay) {
-        scheduledExecutor.schedule(task, delay, TimeUnit.MILLISECONDS);
+        instance().scheduledExecutor.schedule(task, delay, TimeUnit.MILLISECONDS);
     }
 
+    @SuppressWarnings("unused")
     public static @NotNull CancelableTimeTask runTaskTimer(@NotNull LambdaExecutor executor, long timer) {
         CancelableTimeTask task = new CancelableTimeTask() {
             @Override
@@ -69,15 +77,16 @@ public class ScheduleManager {
             }
         };
 
-        scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
+        instance().scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
 
         return task;
     }
 
     public static void runTaskTimer(@NotNull CancelableTimeTask task, long timer) {
-        scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
+        instance().scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
     }
 
+    @SuppressWarnings("unused")
     public static @NotNull CancelableTimeTask runTaskTimerAsync(@NotNull LambdaExecutor executor, long timer) {
         CancelableTimeTask task = new CancelableTimeTask() {
             @Override
@@ -92,33 +101,11 @@ public class ScheduleManager {
     }
 
     public static void runTaskTimerAsync(@NotNull CancelableTimeTask task, long timer) {
-        scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
+        instance().scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
     }
 
     public static void runTaskAsync(@NotNull LambdaExecutor task) {
-        threadExecutor.execute(task::execute);
+        instance().threadExecutor.execute(task::execute);
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public ScheduleManager init() {
-        instance = this;
-
-        ScheduleManager.scheduledExecutor = Executors.newScheduledThreadPool(instance.schedulePoolSize());
-        ScheduleManager.threadExecutor = Executors.newFixedThreadPool(instance.threadPoolSize());
-
-        return this;
-    }
-
-    @Getter
-    @Setter
-    @Accessors(fluent = true)
-    @NoArgsConstructor
-    public static class Builder extends _Builder {
-        public ScheduleManager build() {
-            return super.build().init();
-        }
-    }
 }
