@@ -14,7 +14,7 @@ public class LambdaRunnableExecutorTest {
 
     @BeforeAll
     public static void init() {
-        ScheduleUtils.init(new ScheduleUtils.Settings());
+        ScheduleManager.builder().build();
     }
 
     @Test
@@ -35,7 +35,7 @@ public class LambdaRunnableExecutorTest {
 
         ReturnArgsLambdaExecutor<String, String, String> mergeStrings = (arg1, arg2) -> (arg1 + arg2);
 
-        ReturnLambdaExecutor<String> hellowWorld = () -> "Hello World";
+        ReturnLambdaExecutor<String> helloWorld = () -> "Hello World";
 
         assertDoesNotThrow(() -> printTimesTen.execute(10));
         assertDoesNotThrow(() -> printMergeStrings.execute("test", "test"));
@@ -43,7 +43,7 @@ public class LambdaRunnableExecutorTest {
 
         int result1 = timesTen.execute(10);
         String result2 = mergeStrings.execute("test", "test");
-        String result3 = hellowWorld.execute();
+        String result3 = helloWorld.execute();
 
 
         assertEquals(100, result1);
@@ -56,7 +56,7 @@ public class LambdaRunnableExecutorTest {
     public void testRunTaskLater() {
         AtomicBoolean executed = new AtomicBoolean(false);
 
-        ScheduleUtils.runTaskLater(() -> executed.set(true), 1000);
+        ScheduleManager.runTaskLater(() -> executed.set(true), 1000);
 
         Thread.sleep(1500);
 
@@ -68,7 +68,7 @@ public class LambdaRunnableExecutorTest {
     public void testRunTaskTimer() {
         AtomicInteger executed = new AtomicInteger(0);
 
-        ScheduleUtils.runTaskTimer(new CancelableTimeTask() {
+        ScheduleManager.runTaskTimer(new CancelableTimeTask() {
             @Override
             public void execute() {
                 executed.getAndAdd(1);

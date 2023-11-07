@@ -1,6 +1,7 @@
 package dev.lightdream.lambda;
 
 import dev.lightdream.lambda.lambda.LambdaExecutor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,19 +14,26 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("unused")
-public class ScheduleUtils {
+@Builder(builderClassName = "_Builder", toBuilder = true)
+@Getter
+@Setter
+@Accessors(chain = true, fluent = true)
+public class ScheduleManager {
+
+
+    private static ScheduleManager instance;
 
     private static ScheduledExecutorService scheduledExecutor;
     private static ExecutorService threadExecutor;
 
     static {
-        init(new Settings());
+        builder().build();
     }
 
-    public static void init(Settings settings) {
-        ScheduleUtils.scheduledExecutor = Executors.newScheduledThreadPool(settings.schedulePoolSize());
-        ScheduleUtils.threadExecutor = Executors.newFixedThreadPool(settings.threadPoolSize());
-    }
+    @lombok.Builder.Default
+    private int schedulePoolSize = 1;
+    @lombok.Builder.Default
+    private int threadPoolSize = 1;
 
     public static void runTaskLater(@NotNull LambdaExecutor task, long delay) {
         scheduledExecutor.schedule(new CancelableTimeTask() {
@@ -91,17 +99,26 @@ public class ScheduleUtils {
         threadExecutor.execute(task::execute);
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public ScheduleManager init() {
+        instance = this;
+
+        ScheduleManager.scheduledExecutor = Executors.newScheduledThreadPool(instance.schedulePoolSize());
+        ScheduleManager.threadExecutor = Executors.newFixedThreadPool(instance.threadPoolSize());
+
+        return this;
+    }
+
     @Getter
     @Setter
     @Accessors(fluent = true)
     @NoArgsConstructor
-    public static class Settings {
-
-        private int schedulePoolSize = 1;
-        private int threadPoolSize = 1;
-
-        public void build() {
-            ScheduleUtils.init(this);
+    public static class Builder extends _Builder {
+        public ScheduleManager build() {
+            return super.build().init();
         }
     }
 }
