@@ -1,10 +1,7 @@
 package dev.lightdream.lambda;
 
 import dev.lightdream.lambda.lambda.LambdaExecutor;
-import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,9 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-@Builder
 @Getter
-@Setter
 @Accessors(chain = true, fluent = true)
 public class ScheduleManager {
 
@@ -28,9 +23,10 @@ public class ScheduleManager {
     private final ScheduledExecutorService scheduledExecutor;
     private final ExecutorService threadExecutor;
 
-    private @Default int schedulePoolSize = 1;
-    private @Default int threadPoolSize = 1;
+    private final int schedulePoolSize;
+    private final int threadPoolSize;
 
+    @lombok.Builder(builderClassName = "Builder")
     public ScheduleManager(int schedulePoolSize, int threadPoolSize) {
         instance = this;
 
@@ -41,6 +37,13 @@ public class ScheduleManager {
         threadExecutor = Executors.newFixedThreadPool(threadPoolSize);
     }
 
+    public static Builder builder() {
+        return new Builder()
+                .schedulePoolSize(1)
+                .threadPoolSize(1);
+    }
+
+    @SuppressWarnings("unused")
     public static void runTaskLater(@NotNull LambdaExecutor task, long delay) {
         instance().scheduledExecutor.schedule(new CancelableTimeTask() {
             @Override
@@ -82,6 +85,7 @@ public class ScheduleManager {
         return task;
     }
 
+    @SuppressWarnings("unused")
     public static void runTaskTimer(@NotNull CancelableTimeTask task, long timer) {
         instance().scheduledExecutor.scheduleAtFixedRate(task, 0, timer, TimeUnit.MILLISECONDS);
     }
